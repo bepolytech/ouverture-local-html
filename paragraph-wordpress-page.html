@@ -6,26 +6,38 @@ fetch('https://api.example.com/status')
     let text = '';
     let color = '';
     let style = '';
+    let info = '';
 
-    if (data.status === 'OUVERT') {
+    if (data.status.title === '1') {
       text = 'OUVERT';
       color = '#00bf00';
-    } else if (data.status === 'FERME') {
+      info = data.status.info;
+    } else if (data.status === '0') {
       text = 'FERMÉ';
       color = '#bf0000';
-    } else {
-      text = '<i>INCONNU</i>';
+      info = data.status.info;
+    } else if (data.status === '-1') {
+      text = 'APOCALYPSE';
+      color = 'purple';
+      info = data.status.info;
+     } else {
+      text = 'INCONNU';
       color = '#d4d4d4';
+      info = data.status.info;
       style = 'font-style: italic;';
     }
 
     let status = document.getElementById('status');
-    status.innerHTML = `<h3 style="padding: 8px 16px; border:2px solid black; border-radius: 5px; display: inline;"><u>Le local est <strong> <span style="color: ${color}; ${style}">${text}</span></strong></u></h3>`;
+    status.innerHTML = `<h3 style="padding: 8px 16px; border:2px solid black; border-radius: 5px; display: inline;"><u>Le local est <strong> <span style="color: ${color}; ${style}">${text}</span></strong></u></h3><br><p style="padding: 8px">API Error: ${info}</p>`;
+
     //document.write(`<h3 style="padding: 8px 16px; border:2px solid black; border-radius: 5px; display: inline;"><u>Le local est <strong> <span style="color: ${color}; ${style}">${text}</span></strong></u></h3>`);
   })
   .catch(error => {
     let status = document.getElementById('status');
-    status.innerHTML = `<h3 style="padding: 8px 16px; border:2px solid black; border-radius: 5px; display: inline;"><u>Le local est <strong> <span style="color: #d4d4d4; font-style: italic;">INCONNU</span></strong></u></h3>`;
+    status.innerHTML = `<h3 style="padding: 8px 16px; border:2px solid black; border-radius: 5px; display: inline;"><u>Le local est <strong> <span style="color: #d4d4d4; font-style: italic;">INCONNU (${error.message})</span></strong></u></h3><br><p style="padding: 8px">API Error: ${error}</p>`;
+    console.log(error);
+
+
     //document.write(`<h3 style="padding: 8px 16px; border:2px solid black; border-radius: 5px; display: inline;"><u>Le local est <strong> <span style="color: #d4d4d4; font-style: italic;">INCONNU</span></strong></u></h3>`);
   });
 </script>
