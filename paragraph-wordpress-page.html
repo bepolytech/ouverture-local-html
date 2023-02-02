@@ -28,17 +28,17 @@ fetch('https://api.example.com/status')
     }
 
     let status = document.getElementById('status');
-    status.innerHTML = `<h3 style="padding: 8px 16px; border:2px solid black; border-radius: 5px; display: inline;"><u>Le local est <strong> <span style="color: ${color}; ${style}">${text}</span></strong></u></h3><br><p style="padding: 8px">API Error: ${info}</p>`;
+    status.innerHTML = `<div style="padding: 4px 16px; border:2px solid black; border-radius: 5px; display: inline-block; vertical-align: middle;"><h3 style="margin-top: 4px"><u>Le local est <strong> <span style="color: ${color}; ${style}">${text}</span></strong></u></h3></div><br><p style="padding-top: 8px">API Error: ${info}</p>`;
 
-    //document.write(`<h3 style="padding: 8px 16px; border:2px solid black; border-radius: 5px; display: inline;"><u>Le local est <strong> <span style="color: ${color}; ${style}">${text}</span></strong></u></h3>`);
+    //document.write(`<div style="padding: 4px 16px; border:2px solid black; border-radius: 5px; display: inline-block; vertical-align: middle;"><h3 style="margin-top: 4px"><u>Le local est <strong> <span style="color: ${color}; ${style}">${text}</span></strong></u></h3></div>`);
   })
   .catch(error => {
     let status = document.getElementById('status');
-    status.innerHTML = `<h3 style="padding: 8px 16px; border:2px solid black; border-radius: 5px; display: inline;"><u>Le local est <strong> <span style="color: #d4d4d4; font-style: italic;">INCONNU</span></strong></u></h3><br><p style="padding: 8px">API Error: ${error}</p>`;
+    status.innerHTML = `<div style="padding: 4px 16px; border:2px solid black; border-radius: 5px; display: inline-block; vertical-align: middle;"><h3 style="margin-top: 4px"><u>Le local est <strong><br> <span style="color: #d4d4d4; font-style: italic;">ÉTAT INCONNU</span></strong></u></h3></div><br><p style="padding-top: 8px">API Error: ${error}</p>`;
     console.log(error);
 
 
-    //document.write(`<h3 style="padding: 8px 16px; border:2px solid black; border-radius: 5px; display: inline;"><u>Le local est <strong> <span style="color: #d4d4d4; font-style: italic;">INCONNU</span></strong></u></h3>`);
+    //document.write(`<div style="padding: 4px 16px; border:2px solid black; border-radius: 5px; display: inline-block; vertical-align: middle;"><h3 style="margin-top: 4px"><u>Le local est <strong> <span style="color: #d4d4d4; font-style: italic;">ÉTAT INCONNU</span></strong></u></h3></div>`);
   });
   
   //setInterval(() => {
