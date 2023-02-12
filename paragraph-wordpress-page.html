@@ -1,6 +1,6 @@
 <div style="text-align:center; padding: 16px;"><div id="status">please activate javascript</div></div>
 <script type="text/javascript">
-fetch('https://api.example.com/status')
+fetch('https://api.example.com/local')
   .then(response => response.json())
   .then(data => {
     let text = '';
@@ -8,22 +8,27 @@ fetch('https://api.example.com/status')
     let style = '';
     let info = '';
 
-    if (data.status.title === '1') {
+    if (data.door_state === 1) {
       text = 'OUVERT';
       color = '#00bf00';
-      info = data.status.info;
-    } else if (data.status === '0') {
+      info = data.info;
+    } else if (data.door_state === 0) {
       text = 'FERMÉ';
       color = '#bf0000';
-      info = data.status.info;
-    } else if (data.status === '-1') {
+      info = data.info;
+    } else if (data.door_state === -1) {
       text = 'APOCALYPSE';
       color = 'purple';
-      info = data.status.info;
-     } else {
+      info = data.info;
+    } else if (data.door_state === 2) {
       text = 'INCONNU';
       color = '#d4d4d4';
-      info = data.status.info;
+      info = data.info;
+      style = 'font-style: italic;';
+    } else {
+      text = 'INCONNU';
+      color = '#d4d4d4';
+      info = data.info;
       style = 'font-style: italic;';
     }
 
