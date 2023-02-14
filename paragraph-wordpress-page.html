@@ -9,6 +9,7 @@ fetch('https://api.example.com/local')
     let info = data.info;
     let temp = data.temperature;
     let hum = data.humidity;
+    let updateTime = data.update_time;
 
     if (data.door_state === 1) {
       text = 'OUVERT';
@@ -30,7 +31,7 @@ fetch('https://api.example.com/local')
     }
 
     let status = document.getElementById('status');
-    status.innerHTML = `<div style="padding: 4px 16px; border:2px solid black; border-radius: 5px; display: inline-block; vertical-align: middle;"><h3 style="margin-top: 4px"><u>Le local est <strong> <span style="color: ${color}; ${style}">${text}</span></strong></u></h3></div><br><p style="padding-top: 8px">Info: ${info}<br>Température: <strong>${temp}</strong><br>Humidité: <strong>${hum}</strong></p>`;
+    status.innerHTML = `<div style="padding: 4px 16px; border:2px solid black; border-radius: 5px; display: inline-block; vertical-align: middle;"><h3 style="margin-top: 4px"><u>Le local est <strong> <span style="color: ${color}; ${style}">${text}</span></strong></u></h3></div><br><p style="padding-top: 8px">Info: ${info}<br>Dernière update: ${updateTime}<br><div style="vertical-align: middle; display: inline-block; text-align:right">Température: <strong>${temp}</strong><br>Humidité: <strong>${hum}</strong></div></p>`;
     console.log("BEP API get successful");
   
 
@@ -38,7 +39,7 @@ fetch('https://api.example.com/local')
   })
   .catch(error => {
     let status = document.getElementById('status');
-    status.innerHTML = `<div style="padding: 4px 16px; border:2px solid black; border-radius: 5px; display: inline-block; vertical-align: middle;"><h3 style="margin-top: 4px">Le local est <strong><br> <u><span style="color: #d4d4d4; font-style: italic; font-size:36px;">ÉTAT INCONNU</span></strong></u></h3></div><br><p style="color: #781f1f;padding-top: 8px"><strong>API Error: ${error}</strong><br>Température: <strong>INCONNUE</strong><br>Humidité: <strong>INCONNUE</strong></p>`;
+    status.innerHTML = `<div style="padding: 4px 16px; border:2px solid black; border-radius: 5px; display: inline-block; vertical-align: middle;"><h3 style="margin-top: 4px">Le local est <strong><br> <u><span style="color: #d4d4d4; font-style: italic; font-size:36px;">ÉTAT INCONNU</span></strong></u></h3></div><br><p style="color: #781f1f;padding-top: 8px"><strong>API Error: ${error}</strong><br>Dernière update: INCONNUE<br><div style="vertical-align: middle; display: inline-block; text-align:right">Température: <strong>INCONNUE</strong><br>Humidité: <strong>INCONNUE</strong></div></p>`;
     console.log(error);
 
 
