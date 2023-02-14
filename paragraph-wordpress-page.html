@@ -6,29 +6,26 @@ fetch('https://api.example.com/local')
     let text = '';
     let color = '';
     let style = '';
-    let info = '';
+    let info = data.info;
+    let temp = data.temperature;
+    let hum = data.humidity;
 
     if (data.door_state === 1) {
       text = 'OUVERT';
       color = '#00bf00';
-      info = data.info;
     } else if (data.door_state === 0) {
       text = 'FERMÉ';
       color = '#bf0000';
-      info = data.info;
     } else if (data.door_state === -1) {
       text = 'APOCALYPSE';
       color = 'purple';
-      info = data.info;
     } else if (data.door_state === 2) {
       text = 'INCONNU';
       color = '#d4d4d4';
-      info = data.info;
       style = 'font-style: italic;';
     } else {
       text = 'INCONNU';
       color = '#d4d4d4';
-      info = data.info;
       style = 'font-style: italic;';
     }
 
