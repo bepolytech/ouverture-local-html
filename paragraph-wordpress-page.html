@@ -31,7 +31,7 @@ fetch('https://api.example.com/local')
     }
 
     let status = document.getElementById('status');
-    status.innerHTML = `<div style="padding: 4px 16px; border:2px solid black; border-radius: 5px; display: inline-block; vertical-align: middle;"><h3 style="margin-top: 4px"><u>Le local est <strong> <span style="color: ${color}; ${style}">${text}</span></strong></u></h3></div><br><p style="padding-top: 8px">Info: ${info}<br>Dernière update: ${updateTime}<br><div style="vertical-align: middle; display: inline-block; text-align:right">Température: <strong>${temp}</strong><br>Humidité: <strong>${hum}</strong></div></p>`;
+    status.innerHTML = `<div style="padding: 4px 16px; border:2px solid black; border-radius: 5px; display: inline-block; vertical-align: middle;"><h3 style="margin-top: 4px"><u>Le local est <strong> <span style="color: ${color}; ${style}">${text}</span></strong></u></h3></div><br><p style="padding-top: 8px">Info: ${info}<br>Dernière update: ${updateTime}<br><div style="vertical-align: middle; display: inline-block; text-align:right">Température: <strong>${temp}°C</strong><br>Humidité: <strong>${hum}%</strong></div></p>`;
     console.log("BEP API get successful");
   
 
