@@ -1,6 +1,7 @@
-<div style="text-align:center; padding: 16px;"><div id="status">Loading...<br>or<br>Please activate JavaScript</div></div>
+<div style="text-align:center; padding: 16px;"><div id="status">Please activate JavaScript</div></div>
 <script type="text/javascript">
-fetch('https://api.bepolytech.be/local/')
+document.getElementById('status').innerHTML = `Loading...`;
+fetch('https://bepi.bepolytech.be/local/') //https://api.bepolytech.be , https://devociarm.placentino.be/local/
   .then(response => response.json())
   .then(data => {
     let text = '';
@@ -9,7 +10,8 @@ fetch('https://api.bepolytech.be/local/')
     let info = data.info;
     let temp = data.temperature;
     let hum = data.humidity;
-    let updateTime = data.update_time;
+    //let updateTime = data.update_time;
+    let updateTimeUnix = data.update_time_unix;
     console.log(data);
 
     if (data.door_state === 1) {
@@ -22,27 +24,30 @@ fetch('https://api.bepolytech.be/local/')
       text = 'INCONNU';
       color = '#d4d4d4';
       style = 'font-style: italic;';
-    //} else if (data.door_state === -1) {
-    //  text = 'APOCALYPSE';
-    //  color = 'purple';
     } else {
       text = 'ÉTAT INCONNU';
       color = '#d4d4d4';
       style = 'font-style: italic;';
     }
+
+    let d = new Date(updateTimeUnix*1000);
+    let localeString = d.toLocaleString("fr", { timezone: "Europe/Brussels" });
+    let updateTimeHour = localeString.slice(11, -3);
+    let updateTimeDate = localeString.slice(0, 10);
+    let updateTime = localeString.slice(11, -3) + " " + localeString.slice(0,10);
+
     // Display the information
     console.log('Temperature:', temp);
     console.log('Humidity:', hum);
     console.log('Door State:', text);
     console.log('Info:', info);
     console.log('Update Time:', updateTime);
+    console.log('Update Time Unix:', updateTimeUnix);
 
     let status = document.getElementById('status');
-    status.innerHTML = `<div style="padding: 4px 16px; border:2px solid black; border-radius: 5px; display: inline-block; vertical-align: middle;"><h3 style="margin-top: 4px">Le local est <strong><br> <u><span style="color: ${color}; ${style}; font-size:36px;">${text}</span></strong></u><br>au public</h3></div><br><p style="padding-top: 8px">Info: ${info}<br>Dernière update: ${updateTime}<br><div style="vertical-align: middle; display: inline-block; text-align:right">Température: <strong>${temp}°C</strong><br>Humidité: <strong>${hum}%</strong></div></p>`;
+    status.innerHTML = `<div style="padding: 4px 16px; border:2px solid black; border-radius: 5px; display: inline-block; vertical-align: middle;"><h3 style="margin-top: 4px">Le local est <strong><br> <u><span style="color: ${color}; ${style}; font-size:36px;">${text}</span></strong></u><br>au public</h3></div><br><p style="padding-top: 8px">Info: ${info}<br>Dernière update: <strong>${updateTimeHour}</strong> (${updateTimeDate})<br><div style="vertical-align: middle; display: inline-block; text-align:right">Température: <strong>${temp}°C</strong><br>Humidité: <strong>${hum}%</strong></div></p>`;
 
     console.log("BEP API get successful");
-
-    //document.write(`<div style="padding: 4px 16px; border:2px solid black; border-radius: 5px; display: inline-block; vertical-align: middle;"><h3 style="margin-top: 4px">Le local est <strong> <u><span style="color: ${color}; ${style}; font-size:36px;">${text}</span></strong></u><br>au public</h3></div>`);
 
   })
   .catch(error => {
@@ -53,13 +58,10 @@ fetch('https://api.bepolytech.be/local/')
 
     console.error(error);
 
-
-    //document.write(`<div style="padding: 4px 16px; border:2px solid black; border-radius: 5px; display: inline-block; vertical-align: middle;"><h3 style="margin-top: 4px">Le local est <strong> <u><span style="color: #d4d4d4; font-style: italic; font-size:36px;">ÉTAT INCONNU</span></strong></u><br>au public</h3></div>`);
-
   });
 
-  //setInterval(() => {
-  //  location.reload();
-  //}, 2 * 60 * 1000); // milliseconds: 2 * 60 * 1000 = 2min
+//setInterval(() => {
+//  location.reload();
+//}, 2 * 60 * 1000); // milliseconds: 2 * 60 * 1000 = 2min
 </script>
 <meta http-equiv="refresh" content="120"><!-- refresh every 2 * 60 sec -->
