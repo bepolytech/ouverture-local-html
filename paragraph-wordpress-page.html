@@ -1,4 +1,60 @@
-<meta id="refresh" http-equiv="refresh" content="120"><!-- refresh every 2 * 60 sec -->
+<style>
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  display: inline-block;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  background-color: #aaa;
+  -webkit-transition: .2s;
+  transition: .2s;
+}
+
+.slider:before {
+  position: absolute;
+
+  content: "";
+  color: #0c5ef5;
+  font-weight: bold;
+  text-align: center;
+  height: 20px;
+  width: 20px;
+  left: 3.5px;
+  bottom: 3px;
+  background-color: white;
+  -webkit-transition: .2s;
+  transition: .2s;
+}
+
+input:checked + .slider {
+  background-color: #0c5ef5;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #0c5ef5;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(23px);
+  -ms-transform: translateX(23px);
+  transform: translateX(23px);
+}
+
+
+</style>
+<!--<meta id="refresh" http-equiv="refresh" content="120"><!-- refresh every 2 * 60 sec -->
 <div style="text-align:center; padding: 16px;"><div id="status">Please activate JavaScript</div></div>
 <script type="text/javascript">
 document.getElementById('status').innerHTML = `Loading...`;
@@ -6,10 +62,10 @@ function toggleRefresh() {
         var metaTag = document.getElementById('refresh');
         if (metaTag.getAttribute("content") === "3600") {
           metaTag.setAttribute("content", "120");
-          document.getElementById('refresh-button').innerHTML = `<span style="color: blue;"><i class="fas fa-sync-alt"></i></span> Refresh automatique activé`;
+          document.getElementById('refresh-button').innerHTML = `<span style="color: blue;"><i class="fas fa-sync-alt"></i> </span>Refresh dans <span id="countdown">60</span>s`;
         } else {
           metaTag.setAttribute("content", "3600");
-          document.getElementById('refresh-button').innerHTML = `<span style="color: red;"><i class="fas fa-times"></i></span> Refresh automatique désactivé`;
+          document.getElementById('refresh-button').innerHTML = `<span style="color: red;"><i class="fas fa-times"></i> </span>Refresh automatique désactivé`;
         }
       };
 fetch('https://devociarm.placentino.be/local/') //https://api.bepolytech.be , https://devociarm.placentino.be/local/
@@ -56,14 +112,14 @@ fetch('https://devociarm.placentino.be/local/') //https://api.bepolytech.be , ht
     console.log('Update Time Unix:', updateTimeUnix);
 
     let status = document.getElementById('status');
-    status.innerHTML = `<div style="padding: 4px 16px; border:2px solid black; border-radius: 5px; display: inline-block; vertical-align: middle;"><h3 style="margin-top: 4px">Le local est <strong><br> <u><span style="color: ${color}; ${style}; font-size:36px;">${text}</span></strong></u><br>au public</h3></div><br><p style="padding-top: 8px">Info: ${info}<br>Dernière update: <strong>${updateTimeHour}</strong> (${updateTimeDate})<br><div style="vertical-align: middle; display: inline-block; text-align:right">Température: <strong>${temp}°C</strong><br>Humidité: <strong>${hum}%</strong></div></p>`;
+    status.innerHTML = `<div style="padding: 4px 16px; border:2px solid black; border-radius: 0px; display: inline-block; vertical-align: middle;"><h3 style="margin-top: 4px">Le local est <strong><br> <u><span style="color: ${color}; ${style}; font-size:36px;">${text}</span></strong></u><br>au public</h3></div><br><p style="padding-top: 8px">Info: ${info}<br>Dernière update: <strong>${updateTimeHour}</strong> (${updateTimeDate})<br><div style="vertical-align: middle; display: inline-block; text-align:right">Température: <strong>${temp}°C</strong><br>Humidité: <strong>${hum}%</strong></div></p>`;
 
     console.log("BEP API get successful");
 
   })
   .catch(error => {
     let status = document.getElementById('status');
-    status.innerHTML = `<div style="padding: 4px 16px; border:2px solid black; border-radius: 5px; display: inline-block; vertical-align: middle;"><h3 style="margin-top: 4px">Le local est <strong><br> <u><span style="color: #d4d4d4; font-style: italic; font-size:36px;">ÉTAT INCONNU</span></strong></u><br>au public</h3></div><br><p style="color: #781f1f;padding-top: 8px"><strong>API Error: ${error}</strong><br>Dernière update: INCONNUE<br><div style="vertical-align: middle; display: inline-block; text-align:right">Température: <strong>INCONNUE</strong><br>Humidité: <strong>INCONNUE</strong></div></p>`;
+    status.innerHTML = `<div style="padding: 4px 16px; border:2px solid black; border-radius: 0px; display: inline-block; vertical-align: middle;"><h3 style="margin-top: 4px">Le local est <strong><br> <u><span style="color: #d4d4d4; font-style: italic; font-size:36px;">ÉTAT INCONNU</span></strong></u><br>au public</h3></div><br><p style="color: #781f1f;padding-top: 8px"><strong>API Error: ${error}</strong><br>Dernière update: INCONNUE<br><div style="vertical-align: middle; display: inline-block; text-align:right">Température: <strong>INCONNUE</strong><br>Humidité: <strong>INCONNUE</strong></div></p>`;
 
     console.log(error);
 
@@ -76,24 +132,28 @@ fetch('https://devociarm.placentino.be/local/') //https://api.bepolytech.be , ht
 //}, 2 * 60 * 1000); // milliseconds: 2 * 60 * 1000 = 2min
 </script>
 
-<p style="text-align:center">
-  <button onClick="window.location.reload();" style="background-color: #000000;
-        font-size: 20px;
-        color: white;
-        border: 1px solid #ffffff;
-        padding: 8px 16px;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-        cursor: pointer;
-        text-decoration: none;
-        text-align:center;">
-    Refresh
-  </button>
-<br>
+<div style="margin: 0 auto; display: grid; text-align: center; justify-content: center;">
+  <span style="text-align: left; display: block;
+    justify-content: left; margin: 0; padding: 0;"><button onClick="window.location.reload();" style="background-color: #000000;
+    font-size: 20px;
+    color: white;
+    border: 1px solid #ffffff;
+    padding: 8px 16px;
+    border-radius: 0px;
+    //border-top-left-radius: 5px;
+    //border-top-right-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align:center;">
+  Refresh</button>
+  </span>
+<!--
+<span style="text-align: center; display: flex;
+  justify-content: center; margin: 0; padding: 0;">
   <button id="refresh-button" type="button" style="text-align:center;
         background-color: transparent
         border: 1px solid #ffffff;
-        border-radius: 5px;
+        border-radius: 0px;
         //color: white;
         padding: 4px 8px;
         text-align: center;
@@ -102,6 +162,21 @@ fetch('https://devociarm.placentino.be/local/') //https://api.bepolytech.be , ht
         font-size: 12px;
         margin: -2px 2px;
         cursor: pointer;" onclick="toggleRefresh()">
-    <span id="toggleIcon"><span style="color: blue;"><i class="fas fa-sync-alt"></i></span> Refresh automatique activé</span>
-  </button>
-</p>
+    <span style="color: blue;"><i class="fas fa-sync-alt"></i> </span>Refresh dans <span id="countdown">60</span>s
+    </button>
+</span>
+-->
+  <span style="text-align: left; display: block;
+    justify-content: left; margin: 0; padding: 0;">
+  <div style="justify-content: center; text-align: center; display: inline-block; vertical-align: middle; margin: 1px; padding: 0;">
+    <span style="text-align: center; display: inline-block; vertical-align: middle;">
+      <label class="switch">
+        <input id="refresh-switch" type="checkbox" checked>
+        <div class="slider"><div style="font-size: 14px; font-weight: bold; color: #0c5ef5; position: relative; vertical-align: bottom; text-align: right; margin-top: 5.8px; margin-right: 6.5px;"><i class="fas fa-sync-alt"></i></div></div>
+      </label>
+    </span>
+    <span id="toggle-text" style="padding: 2px; margin-bottom: 3px; display: inline-block; vertical-align: middle;">TODOs</span>
+    </div>
+  </span>
+</div>
+
