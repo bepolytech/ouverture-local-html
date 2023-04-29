@@ -1,7 +1,18 @@
+<meta id="refresh" http-equiv="refresh" content="120"><!-- refresh every 2 * 60 sec -->
 <div style="text-align:center; padding: 16px;"><div id="status">Please activate JavaScript</div></div>
 <script type="text/javascript">
 document.getElementById('status').innerHTML = `Loading...`;
-fetch('https://bepi.bepolytech.be/local/') //https://api.bepolytech.be , https://devociarm.placentino.be/local/
+function toggleRefresh() {
+        var metaTag = document.getElementById('refresh');
+        if (metaTag.getAttribute("content") === "3600") {
+          metaTag.setAttribute("content", "120");
+          document.getElementById('refresh-button').innerHTML = `<span style="color: blue;"><i class="fas fa-sync-alt"></i></span> Refresh automatique activé`;
+        } else {
+          metaTag.setAttribute("content", "3600");
+          document.getElementById('refresh-button').innerHTML = `<span style="color: red;">✗</span> Refresh automatique désactivé`;
+        }
+      };
+fetch('https://devociarm.placentino.be/local/') //https://api.bepolytech.be , https://devociarm.placentino.be/local/
   .then(response => response.json())
   .then(data => {
     let text = '';
@@ -64,4 +75,33 @@ fetch('https://bepi.bepolytech.be/local/') //https://api.bepolytech.be , https:/
 //  location.reload();
 //}, 2 * 60 * 1000); // milliseconds: 2 * 60 * 1000 = 2min
 </script>
-<meta http-equiv="refresh" content="120"><!-- refresh every 2 * 60 sec -->
+
+<p style="text-align:center">
+  <button onClick="window.location.reload();" style="background-color: #000000;
+        font-size: 20px;
+        color: white;
+        border: 1px solid #ffffff;
+        padding: 8px 16px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        text-align:center;">
+    Refresh
+  </button>
+<br>
+  <button id="refresh-button" type="button" style="text-align:center;
+        background-color: transparent
+        border: 1px solid #ffffff;
+        border-radius: 5px;
+        //color: white;
+        padding: 4px 8px;
+        text-align: center;
+        text-decoration: underline;
+        display: inline-block;
+        font-size: 12px;
+        margin: -2px 2px;
+        cursor: pointer;" onclick="toggleRefresh()">
+    <span id="toggleIcon"><span style="color: blue;"><i class="fas fa-sync-alt"></i></span> Refresh automatique activé</span>
+  </button>
+</p>
