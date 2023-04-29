@@ -9,7 +9,7 @@ function toggleRefresh() {
           document.getElementById('refresh-button').innerHTML = `<span style="color: blue;"><i class="fas fa-sync-alt"></i></span> Refresh automatique activé`;
         } else {
           metaTag.setAttribute("content", "3600");
-          document.getElementById('refresh-button').innerHTML = `<span style="color: red;">✗</span> Refresh automatique désactivé`;
+          document.getElementById('refresh-button').innerHTML = `<span style="color: red;"><i class="fas fa-times"></i></span> Refresh automatique désactivé`;
         }
       };
 fetch('https://devociarm.placentino.be/local/') //https://api.bepolytech.be , https://devociarm.placentino.be/local/
