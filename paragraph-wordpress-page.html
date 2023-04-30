@@ -127,9 +127,36 @@ fetch('https://devociarm.placentino.be/local/') //https://api.bepolytech.be , ht
 
   });
 
-//setInterval(() => {
-//  location.reload();
-//}, 2 * 60 * 1000); // milliseconds: 2 * 60 * 1000 = 2min
+// Refresh the page after 120 seconds if the checkbox is checked
+let countdown = 120;
+const refreshSwitch = document.getElementById('refresh-switch');
+const toggleText = document.getElementById('toggle-text');
+
+const refreshInterval = setInterval(() => {
+	if (refreshSwitch.checked) {
+    toggleText.innerHTML = `${countdown}s`;
+    console.log("refresh countdown: " + countdown);
+    countdown--;
+    if (countdown < 0) {
+      clearInterval(refreshInterval);
+      window.location.reload();
+    }
+  } else {
+    toggleText.innerHTML = '';
+    clearInterval(refreshInterval);
+  }
+}, 1000);
+// Stop the refresh if the checkbox is unchecked
+refreshSwitch.addEventListener('change', () => {
+  if (!refreshSwitch.checked) {
+    clearInterval(refreshInterval);
+    toggleText.innerHTML = `non`;
+  } else {
+    toggleText.innerHTML = `refresh`;
+    window.location.reload();
+  }
+});
+
 </script>
 
 <div style="margin: 0 auto; display: grid; text-align: center; justify-content: center;">
